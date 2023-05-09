@@ -10,9 +10,10 @@ const bodyParser = require('body-parser')
 
 
 
+
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
-
+const bookRouter = require('./routes/books')
 
 
 const { parse } = require('dotenv')
@@ -44,7 +45,8 @@ db.once('open', () => console.log('Connection Successful' + '\n' + 'Connected to
 
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
-'authors/new'
+app.use('/books', bookRouter)
+
 
 app.listen(process.env.PORT || 3000)
 
