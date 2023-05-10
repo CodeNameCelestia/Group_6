@@ -7,14 +7,22 @@
 
     
     <title>MyLibrary</title>
-</head>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+  </head>
 <body>
-    
+    <div class="container">
     <br>
     <%- include('../partials/header.ejs')  %> 
+    <div class="inner-container">
     <%- include('../partials/errorMessage.ejs')  %> 
      <%- body %>
-    <br>
+    </div>
+  </div>
+
+
+
+
+    
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
     <script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
