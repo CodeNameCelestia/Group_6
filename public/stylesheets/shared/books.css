@@ -1,12 +1,12 @@
 :root {
     --book-cover-width: 220px;
     --book-cover-width-large: 320px;
-    --book-coever-aspect-ration: 1;
+    --book-coever-aspect-ratio: 1;
 }
 
 .book-cover {
     width: var(--book-cover-width);
-    height: calc(var(--book-cover-width) /var(--book-coever-aspect-ration));
+    height: calc(var(--book-cover-width) /var(--book-coever-aspect-ratio));
 }
 
 .book-cover-large {
