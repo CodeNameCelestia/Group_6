@@ -1,0 +1,12 @@
+<% if (user) { %>
+  <h2 class="page-header"><%= user.name %></h2>
+  <div class="user-details">
+    <!-- Rest of the template code -->
+  </div>
+<% } else { %>
+  <p>User not found</p>
+<% } %>
+
+  <form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+  </form>

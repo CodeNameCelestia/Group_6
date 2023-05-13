@@ -1,0 +1,23 @@
+<% if (user) { %>
+  <h2 class="page-header"><%= user.name %></h2>
+  <div class="user-details">
+    <div class="user-details-grid">
+      <div class="user-details-label">Username:</div>
+      <div><%= user.username %></div>
+      <div class="user-details-label">Email:</div>
+      <div><%= user.email %></div>
+      <div class="user-details-label">Full Name:</div>
+      <div><%= user.name %></div>
+      <div class="user-details-label">Contact #:</div>
+      <div><%= user.contact %></div>
+      <div class="user-details-label">Address:</div>
+      <div><%= user.address %></div>
+    </div>
+  </div>
+<% } else { %>
+  <p>User not found</p>
+<% } %>
+
+<form action="/logout?_method=DELETE" method="POST">
+  <button type="submit">Log Out</button>
+</form>
