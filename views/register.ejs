@@ -1,29 +1,40 @@
 <h1>Register</h1>
 <form action="/register" method="POST">
-<div>
+<div class="form-row">
+    <div class="form-item">
     <label for="username">Username</label>
     <input type="username" id="username" name="username" required>
 </div>
-<div>
+<div class="form-item">
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
 </div>
-<div>
+</div>
+<div class="form-row">
+<div class="form-item">
     <label for="password">Password</label>
     <input type="password" id="password" name="password" required>
-</div>
-<div>
+</div class="form-item">
+<div class="form-item">
     <label for="name">Full Name</label>
     <input type="text" id="name" name="name" required>
 </div>
-<div>
+</div>
+<div class="form-row">
+<div class="form-item">
     <label for="contact">Contact #</label>
     <input type="number" id="contact" name="contact" required>
 </div>
-<div>
+<div class="form-item">
     <label for="address">Address</label>
     <input type="text" id="adress" name="address" required>
 </div>
-<button type="submit">Register</button>
+</div>
+
+
+<div class="btn-row">
+<button class="btn btn-primary" type="submit">Register</button>
 </form>
-<a href="/login">Login</a>
+
+<a class="btn btn-primary" href="/login">Login</a>
+</div>

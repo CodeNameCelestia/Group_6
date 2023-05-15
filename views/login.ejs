@@ -3,14 +3,22 @@
 <%= messages.error  %>
 <% } %>
 <form action="/login" method="POST">
-<div>
+<div class="form-row">
+    <div class="form-item">
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
 </div>
-<div>
+</div>
+<div class="form-row">
+<div class="form-item">
     <label for="password">Password</label>
     <input type="password" id="password" name="password" required>
 </div>
-<button type="submit">Login</button>
+</div>
+
+
+<div class="btn-row">
+<button class="btn btn-primary" type="submit">Login</button>
 </form>
-<a href="/register">Register</a>
+<a class="btn btn-primary" href="/register">Register</a>
+</div>
