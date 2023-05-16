@@ -1,5 +1,6 @@
 <% if (user) { %>
   <h2 class="page-header"><%= user.name %></h2>
+  <div class="book-details">
   <div class="user-details">
     <div class="user-details-grid">
       <div class="user-details-label">Username:</div>
@@ -14,10 +15,11 @@
       <div><%= user.address %></div>
     </div>
   </div>
+</div>
 <% } else { %>
   <p>User not found</p>
 <% } %>
 
 <form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log Out</button>
+  <button class="btn btn-danger" type="submit">Log Out</button>
 </form>
