@@ -7,12 +7,20 @@ const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+
 const methodOverride = require('method-override')
+
+//password bcrypt
 const bcrypt = require('bcrypt')
+
+// for login session
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+
+app.use(express.json());
 
 const initializePassport = require('./public/javascripts/passport-config')
 initializePassport(
@@ -28,11 +36,13 @@ const authorRouter = require('./routes/authors')
 const bookRouter = require('./routes/books')
 const userRouter = require('./routes/users')
 
+const apiRouter = require('./routes/api');
+
 const { parse } = require('dotenv')
 
 
 
-
+app.use('/api', apiRouter);
 
 
 
@@ -40,11 +50,11 @@ app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
+
+
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 app.use(methodOverride('_method'))
 app.use(express.static('public'))
-
-
-
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -55,7 +65,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+
 
 
 
@@ -82,13 +92,17 @@ app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
 app.use('/users', userRouter)
 
-app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index.ejs', { name: req.user.name });
+app.get('/users/show/:id', checkAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.render('users/show', { user: user });
+  } catch (err) {
+    console.error(err);
+    res.redirect('/');
+  }
 });
 
-app.get('/', (req, res) => {
-  res.render('layout', { loggedIn: req.isAuthenticated(), username: res.locals.username });
-});
+
 
 
 
@@ -124,6 +138,10 @@ app.post('/register', checkNotAuthenticated,  async (req, res) => {
         address: req.body.address
       });
       await user.save();
+        
+      console.log('New user registered:')
+      console.log(user)
+
       res.redirect('/login');
     } catch (err) {
       console.error(err);
@@ -131,7 +149,20 @@ app.post('/register', checkNotAuthenticated,  async (req, res) => {
     }
   });
 
-  app.delete('/logout', (req, res) => {
+  app.delete('/users/:id', checkAuthenticated, async (req, res) => {
+    const userId = req.params.id;
+  
+    try {
+      await User.findByIdAndRemove(userId);
+      console.log('User deleted:', user)
+      res.redirect('/login');
+    } catch (err) {
+      console.error(err);
+      res.redirect('/users/show/' + userId);
+    }
+  });
+  
+  app.delete('/logout', (req, res, next) => {
     req.logout((err) => {
       if (err) return next(err);
       res.redirect('/login');

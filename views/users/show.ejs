@@ -2,7 +2,8 @@
   <h2 class="page-header"><%= user.name %></h2>
   <div class="book-details">
   <div class="user-details">
-    <div class="user-details-grid">
+
+    <div class="book-details-grid">
       <div class="user-details-label">Username:</div>
       <div><%= user.username %></div>
       <div class="user-details-label">Email:</div>
@@ -19,7 +20,12 @@
 <% } else { %>
   <p>User not found</p>
 <% } %>
-
+<div class="form-row form-row-end btn-row">
+<div class="btn-row">
+    <a class="btn btn-primary" href="/users/<%= user.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', { url: `/users/${user.id}` }) %>
+</div>
 <form action="/logout?_method=DELETE" method="POST">
   <button class="btn btn-danger" type="submit">Log Out</button>
 </form>
+</div>

@@ -1,15 +1,53 @@
 const express = require('express');
 const router = express.Router();
-
-// Assuming you have the User model imported
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-router.get('/account', checkAuthenticated, (req, res) => {
-  const user = req.user; // Get the currently logged-in user
+// Assuming you have the User model imported
 
-  res.render('users/show', { user: user });
+// GET user edit form
+router.get('/:id/edit', checkAuthenticated, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      // Handle case where user is not found
+      return res.redirect('/account');
+    }
+
+    res.render('users/edit', { user: user });
+  } catch (error) {
+    console.error(error);
+    res.render('error'); // Render an error page
+  }
 });
 
+// POST user update
+router.put('/:id', checkAuthenticated, async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const updatedUser = {
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
+      name: req.body.name,
+      contact: req.body.contact,
+      address: req.body.address
+    };
+
+    await User.findByIdAndUpdate(userId, updatedUser);
+
+    const user = await User.findById(userId);
+
+    res.render('users/show', { user: user });
+  } catch (err) {
+    console.error(err);
+    res.redirect(`/users/${userId}/edit`);
+  }
+});
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -35,7 +73,7 @@ router.get('/show/:id?', checkAuthenticated, async (req, res) => {
     res.render('error'); // Render an error page
   }
 });
-// ...
 
+// ...
 
 module.exports = router;
