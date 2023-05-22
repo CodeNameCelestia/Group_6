@@ -1,4 +1,8 @@
-const User = require('C:/Users/Alejandro/Desktop/Group_6/models/user');
+const path = require('path');
+const User = require(path.resolve(process.cwd(), 'models', 'user'));
+
+//Note change this line ^ above and change it to the path of the models/users
+
 const bcrypt = require('bcrypt')
 
 const LocalStrategy = require('passport-local').Strategy;
