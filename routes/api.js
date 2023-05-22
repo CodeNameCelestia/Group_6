@@ -84,7 +84,7 @@ router.post('/users', async (req, res) => {
     });
 
     const createdUser = await newUser.save();
-    console.log('User created:', createdUser)
+    console.log('User created:', createdUser);
     res.status(201).json(createdUser);
   } catch (error) {
     console.error(error);
@@ -97,12 +97,21 @@ router.put('/users/:id', async (req, res) => {
   console.log(`PUT request received for /users/${req.params.id}`);
   console.log('Request Body:', req.body);
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const { password, ...userData } = req.body;
+
+    // Hash the new password if provided
+    if (password) {
+      req.body.password = await bcrypt.hash(password, 10);
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, userData, {
       new: true,
     });
+
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+
     console.log('User updated:', user);
     res.json(user);
   } catch (error) {
@@ -125,4 +134,32 @@ router.delete('/users/:id', async (req, res) => {
   }
 });
 
+//login system
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    // If user not found, return an error
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    // If passwords don't match, return an error
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    // Authentication successful
+    res.json({ message: 'Login successful', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 module.exports = router;  

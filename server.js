@@ -66,7 +66,7 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-
+  
 app.use(passLoggedIn);
 
 
@@ -94,12 +94,11 @@ app.use('/', loginRouter)
 
 
 
-
-
-
-
 app.listen(process.env.PORT || 3000)
 
+
+
+//To use this program type: " npm run devStart"
 
 
 // Commands Shown:

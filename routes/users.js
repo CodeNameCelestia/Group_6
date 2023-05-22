@@ -43,6 +43,7 @@ router.put('/:id', checkAuthenticated, async (req, res) => {
     const user = await User.findById(userId);
 
     res.render('users/show', { user: user });
+    console.log('User updated:', user);
   } catch (err) {
     console.error(err);
     res.redirect(`/users/${userId}/edit`);
