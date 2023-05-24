@@ -1,0 +1,48 @@
+
+.user-btn {
+    border: 1px solid var(--color-btn-border);
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    font-family: 'Gotham Rounded';
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+.user-details {
+    display: flex;
+}
+
+.user-details-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    align-self: flex-start;
+}
+
+.user-details-grid {
+    display: grid;
+    align-content: flex-start;
+    align-items: center;
+    grid-gap: 0.5rem;
+    grid-template-columns: auto auto;
+}
+
+
+.user-details-btn-grid {
+    display: grid;
+    justify-items: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    grid-template-areas: 
+    "edit delete"
+    "logout logout";
+    grid-gap: .5rem;
+    margin-top: .5rem;
+}
+
+.user-details-user-button {
+    grid-area: logout;
+    justify-self: stretch;
+}

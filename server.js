@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
+  require('dotenv').config()
 }
 
 const express = require('express')
@@ -25,9 +25,9 @@ app.use(express.json());
 
 const initializePassport = require('./public/javascripts/passport-config')
 initializePassport(
-  passport, 
-  email => User.findOne({ email }),
-  id => User.findOne({ _id: id })
+passport, 
+email => User.findOne({ email }),
+id => User.findOne({ _id: id })
 )
 
 
@@ -59,26 +59,26 @@ app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(flash())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
+secret: process.env.SESSION_SECRET,
+resave: false,
+saveUninitialized: false
 }))
 
 app.use(passport.initialize())
 app.use(passport.session())
-  
+
 app.use(passLoggedIn);
 
 
 
 mongoose.connect(
-    'mongodb+srv://Group6:' + process.env.MONGO_ATLAS_PW + '@cluster0.unbj9ol.mongodb.net/myDatabase?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true }
+  'mongodb+srv://Group6:' + process.env.MONGO_ATLAS_PW + '@cluster0.unbj9ol.mongodb.net/myDatabase?retryWrites=true&w=majority',
+  { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 const db = mongoose.connection;
 db.on('error', error => console.error(error));
-db.once('open', () => console.log('Connection Successful' + '\n' + 'Connected to MongoDB' + '\n' + 'Welcome Alejandro'));
+db.once('open', () => console.log('Connection Successful' + '\n' + 'Connected to MongoDB'));
 
 
 
