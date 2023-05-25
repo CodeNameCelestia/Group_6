@@ -19,7 +19,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+app.use(bodyParser.urlencoded({ limit: '11mb', extended: false }))
 
 app.use(express.json());
 
@@ -31,7 +31,7 @@ id => User.findOne({ _id: id })
 )
 
 
-
+// using routes to connect our API
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
 const bookRouter = require('./routes/books')
@@ -70,7 +70,7 @@ app.use(passport.session())
 app.use(passLoggedIn);
 
 
-
+//connection to database (MongoDB)
 mongoose.connect(
   'mongodb+srv://Group6:' + process.env.MONGO_ATLAS_PW + '@cluster0.unbj9ol.mongodb.net/myDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true }

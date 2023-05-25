@@ -101,7 +101,8 @@ router.put('/users/:id', async (req, res) => {
 
     // Hash the new password if provided
     if (password) {
-      req.body.password = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
+      userData.password = hashedPassword;
     }
 
     const user = await User.findByIdAndUpdate(req.params.id, userData, {
